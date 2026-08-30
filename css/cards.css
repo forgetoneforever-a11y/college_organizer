@@ -1,0 +1,115 @@
+/* Общие панели ввода (инпуты для дневника и заданий) */
+.input-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+}
+
+.input-group input[type="text"],
+.input-group input[type="time"] {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    color-scheme: dark;
+}
+
+.input-group button {
+    padding: 0 25px;
+    font-weight: 600;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+}
+
+/* Карточки дневника и оценок */
+.grade-card, .task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    backdrop-filter: blur(10px);
+    transition: 0.2s;
+}
+
+.grade-card:hover, .task-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.grade-info, .task-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.grade-subject-name, .task-text {
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 140px;
+}
+
+.grade-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #a5d6a7;
+}
+
+.grade-avg, .task-time {
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+}
+
+.grade-actions, .task-card {
+    display: flex;
+    gap: 8px;
+}
+
+.grade-actions button, .task-card button.delete-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+}
+
+.grade-actions button:hover, .task-card button.delete-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.delete-btn:hover {
+    background: rgba(244, 67, 54, 0.3) !important;
+    border-color: rgba(244, 67, 54, 0.5) !important;
+}
