@@ -22,7 +22,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Переключение вкладок
+    // 2. Генерация календаря
+    const calendarGrid = document.getElementById('calendarGrid');
+    const monthYearTitle = document.getElementById('monthYearTitle');
+    const prevMonthBtn = document.getElementById('prevMonth');
+    const nextMonthBtn = document.getElementById('nextMonth');
+
+    let currentDate = new Date();
+
+    function renderCalendar() {
+        if (!calendarGrid || !monthYearTitle) return;
+        calendarGrid.innerHTML = '';
+
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        const monthNames = [
+            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        ];
+        monthYearTitle.textContent = `${monthNames[month]} ${year}`;
+
+        // Дни недели
+        const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+        weekDays.forEach(day => {
+            const dayHeader = document.createElement('div');
+            dayHeader.className = 'calendar-day-header';
+            dayHeader.style.cssText = "font-weight: bold; text-align: center; opacity: 0.7; padding: 5px;";
+            dayHeader.textContent = day;
+            calendarGrid.appendChild(dayHeader);
+        });
+
+        // Первый день месяца и общее количество дней
+        const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
+        const totalDays = new Date(year, month + 1, 0).getDate();
+
+        // Пустые ячейки для сдвига дней недели
+        for (let i = 0; i < firstDayIndex; i++) {
+            const emptyCell = document.createElement('div');
+            calendarGrid.appendChild(emptyCell);
+        }
+
+        // Ячейки с числами месяца
+        const today = new Date();
+        for (let day = 1; day <= totalDays; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-day';
+            cell.style.cssText = "min-height: 70px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 6px; position: relative;";
+            
+            cell.innerHTML = `<span style="font-weight: 600; font-size: 14px;">${day}</span>`;
+
+            // Подсветка сегодняшнего дня
+            if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                cell.style.borderColor = '#00ff66';
+                cell.style.background = 'rgba(0,255,102,0.1)';
+            }
+
+            calendarGrid.appendChild(cell);
+        }
+    }
+
+    if (prevMonthBtn && nextMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+    }
+
+    renderCalendar();
+
+    // 3. Переключение вкладок
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -41,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Выбор фона через кнопку с компьютера
+    // 4. Выбор фона через кнопку с компьютера
     const selectBgBtn = document.getElementById('selectBgBtn');
     const bgFileInput = document.getElementById('bgFileInput');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
@@ -86,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Логика добавления задач и будильника
+    // 5. Логика добавления задач и будильника
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskInput = document.getElementById('taskInput');
     const alarmTimeInput = document.getElementById('alarmTimeInput');
@@ -121,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Логика Telegram-уведомлений для будильника
+    // 6. Логика Telegram-уведомлений для будильника
     const tgTokenInput = document.getElementById('tgTokenInput');
     const tgChatIdInput = document.getElementById('tgChatIdInput');
     const saveTgBtn = document.getElementById('saveTgBtn');
