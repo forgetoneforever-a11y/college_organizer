@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фоновый слой (Локальное видео или картинка) -->
+    <!-- Фоновый слой (Видео или Картинка) -->
     <div class="bg-container">
         <video id="local-video-bg" class="bg-video" autoplay muted loop playsinline style="display: none;">
             <source src="" type="video/mp4">
@@ -84,10 +84,13 @@
                     <label>Прозрачность панелей:</label>
                     <input type="range" id="opacityRange" min="0.1" max="1" step="0.05" value="0.35">
                 </div>
+                
+                <!-- Настройка фона через выбор файла с компьютера -->
                 <div class="setting-item">
-                    <label>Фон (Имя файла .mp4 или ссылка на картинку):</label>
-                    <input type="text" id="bgUrlInput" placeholder="например: background.mp4">
-                    <button id="saveBgBtn">Применить фон</button>
+                    <label>Фон (Видео .mp4 или картинка):</label>
+                    <input type="file" id="bgFileInput" accept="video/mp4,image/*" style="display: none;">
+                    <button id="selectBgBtn" class="action-btn">📁 Выбрать файл с компьютера</button>
+                    <span id="fileNameDisplay" style="font-size: 12px; opacity: 0.7; margin-top: 5px;">Файл не выбран</span>
                 </div>
 
                 <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
