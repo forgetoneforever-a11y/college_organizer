@@ -23,3 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+// Логика переключения вкладок
+const navButtons = document.querySelectorAll('.nav-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Убираем активный класс у всех кнопок и секций
+        navButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(tab => tab.classList.remove('active'));
+
+        // Добавляем активный класс нажатой кнопке
+        button.classList.add('active');
+
+        // Находим и показываем нужную секцию по атрибуту data-tab
+        const tabId = button.getAttribute('data-tab');
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+    });
+});
