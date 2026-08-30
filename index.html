@@ -69,7 +69,18 @@
                     <input type="time" id="alarmTimeInput">
                     <button id="addTaskBtn">Добавить задачу</button>
                 </div>
-                <ul id="tasksList"></ul>
+
+                <!-- Настройки Telegram уведомлений для будильника -->
+                <div class="setting-item" style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;">
+                    <label style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block;">📱 Telegram уведомления для будильника:</label>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="tgTokenInput" placeholder="Токен бота (от BotFather)" style="flex: 1; min-width: 180px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+                        <input type="text" id="tgChatIdInput" placeholder="Chat ID" style="width: 130px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+                        <button id="saveTgBtn" class="action-btn" style="padding: 8px 16px;">Сохранить</button>
+                    </div>
+                </div>
+
+                <ul id="tasksList" style="margin-top: 20px;"></ul>
             </section>
 
             <!-- Вкладка 4: Настройки -->
