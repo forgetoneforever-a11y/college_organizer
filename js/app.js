@@ -86,7 +86,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Логика Telegram-уведомлений для будильника
+    // 4. Логика добавления задач и будильника
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskInput = document.getElementById('taskInput');
+    const alarmTimeInput = document.getElementById('alarmTimeInput');
+    const tasksList = document.getElementById('tasksList');
+
+    if (addTaskBtn && taskInput && tasksList) {
+        addTaskBtn.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            const alarmTime = alarmTimeInput ? alarmTimeInput.value : '';
+
+            if (!taskText && !alarmTime) {
+                alert('Введи текст задачи или установи время будильника!');
+                return;
+            }
+
+            const li = document.createElement('li');
+            li.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 10px; margin-bottom: 8px; background: rgba(255,255,255,0.05); border-radius: 8px;";
+            
+            let content = `<span>${taskText || 'Будильник'}</span>`;
+            if (alarmTime) {
+                content += `<span style="font-size: 12px; background: rgba(0,255,100,0.2); padding: 2px 6px; border-radius: 4px;">⏰ ${alarmTime}</span>`;
+            }
+
+            li.innerHTML = content + `<button style="background: transparent; border: none; color: #ff5555; cursor: pointer; font-size: 16px;">✕</button>`;
+
+            li.querySelector('button').addEventListener('click', () => {
+                li.remove();
+            });
+
+            tasksList.appendChild(li);
+            taskInput.value = '';
+        });
+    }
+
+    // 5. Логика Telegram-уведомлений для будильника
     const tgTokenInput = document.getElementById('tgTokenInput');
     const tgChatIdInput = document.getElementById('tgChatIdInput');
     const saveTgBtn = document.getElementById('saveTgBtn');
@@ -124,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Проверка будильника каждую секунду/минуту
     setInterval(() => {
         const alarmInput = document.getElementById('alarmTimeInput');
         if (!alarmInput || !alarmInput.value) return;
