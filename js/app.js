@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await saveBgToDB(file);
         });
     }
-    loadBgFromDB(); // Загружаем фон при старте
+    loadBgFromDB();
 
     // ==========================================
     // 5. Сохранение ЗАДАЧ и БУДИЛЬНИКА (localStorage)
@@ -210,9 +210,10 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks.push({ text: taskText, alarm: alarmTime });
             saveAndRenderTasks();
             taskInput.value = '';
+            if (alarmTimeInput) alarmTimeInput.value = '';
         });
     }
-    renderTasks(); // Загружаем задачи при старте
+    renderTasks();
 
     // ==========================================
     // 6. TELEGRAM УВЕДОМЛЕНИЯ ПО БУДИЛЬНИКУ
@@ -222,8 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveTgBtn = document.getElementById('saveTgBtn');
 
     if (tgTokenInput && tgChatIdInput && saveTgBtn) {
-        tgTokenInput.value = localStorage.getItem('tg_bot_token') || '';
-        tgChatIdInput.value = localStorage.getItem('tg_chat_id') || '';
+        // Подставляем твои данные автоматически, если они еще не сохранены
+        tgTokenInput.value = localStorage.getItem('tg_bot_token') || '8949551278:AAGxkh8IpRxFPV1KxR6pcXR7Vh6niSTkPXg';
+        tgChatIdInput.value = localStorage.getItem('tg_chat_id') || '8870678654';
 
         saveTgBtn.addEventListener('click', () => {
             localStorage.setItem('tg_bot_token', tgTokenInput.value.trim());
@@ -233,8 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function sendTelegramNotification(message) {
-        const token = localStorage.getItem('tg_bot_token');
-        const chatId = localStorage.getItem('tg_chat_id');
+        const token = localStorage.getItem('tg_bot_token') || '8949551278:AAGxkh8IpRxFPV1KxR6pcXR7Vh6niSTkPXg';
+        const chatId = localStorage.getItem('tg_chat_id') || '8870678654';
 
         if (!token || !chatId) return;
 
@@ -249,17 +251,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Проверяем задачи с будильником раз в 10 секунд
     setInterval(() => {
         const now = new Date();
         const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
         tasks.forEach(task => {
             if (task.alarm === currentTime) {
-                const lastSentKey = `sent_${task.text}_${task.alarm}`;
-                if (localStorage.getItem(lastSentKey) !== currentTime) {
+                const lastSentKey = `sent_${task.text}_${task.alarm}_${currentTime}`;
+                if (localStorage.getItem(lastSentKey) !== 'true') {
                     sendTelegramNotification(`⏰ **Будильник!**\nЗадача: ${task.text || 'Без названия'}\nВремя: ${task.alarm}`);
-                    localStorage.setItem(lastSentKey, currentTime);
+                    localStorage.setItem(lastSentKey, 'true');
                 }
             }
         });
