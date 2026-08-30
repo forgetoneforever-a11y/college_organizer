@@ -1,43 +1,25 @@
-import { initCalendar } from './calendar.js';
-import { initGrades } from './grades.js';
-import { initTasks } from './tasks.js';
-import { initSettings } from './settings.js';
+document.addEventListener('DOMContentLoaded', () => {
+    // Логика для умной плашки дня
+    const smartDayTitle = document.getElementById('smartDayTitle');
+    const smartDayDesc = document.getElementById('smartDayDesc');
 
-function startApp() {
-    const navBtns = document.querySelectorAll('.nav-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const sidebar = document.getElementById('sidebar');
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    if (smartDayTitle && smartDayDesc) {
+        const days = [
+            "Воскресенье", "Понедельник", "Вторник", 
+            "Среда", "Четверг", "Пятница", "Суббота"
+        ];
+        
+        const now = new Date();
+        const dayIndex = now.getDay();
+        const currentDayName = days[dayIndex];
 
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            navBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            
-            btn.classList.add('active');
-            const targetTab = document.getElementById(btn.dataset.tab);
-            if (targetTab) targetTab.classList.add('active');
+        smartDayTitle.textContent = `Сегодня ${currentDayName}`;
 
-            if (window.innerWidth <= 768 && sidebar) {
-                sidebar.classList.remove('active');
-            }
-        });
-    });
-
-    if (mobileMenuBtn && sidebar) {
-        mobileMenuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+        // Настраиваем текст в зависимости от дня недели
+        if (dayIndex === 0 || dayIndex === 6) {
+            smartDayDesc.textContent = "Выходной день. Отдыхай и набирайся сил!";
+        } else {
+            smartDayDesc.textContent = "Учебный день. Не забудь проверить расписание и задания!";
+        }
     }
-
-    initCalendar();
-    initGrades();
-    initTasks();
-    initSettings();
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startApp);
-} else {
-    startApp();
-}
+});
