@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фоновый слой (видео YouTube или картинка) -->
+    <!-- Фоновый слой -->
     <div class="bg-container">
         <div id="youtube-bg" class="youtube-bg" style="display: none;"></div>
         <div id="bg-image" class="bg-image"></div>
@@ -33,13 +33,11 @@
         <main class="glass-panel content">
             <!-- Вкладка 1: Календарь -->
             <section id="dashboard" class="tab-content active">
-                
-                <!-- Умная плашка дня (вверху вкладки) -->
                 <div id="smartDailyWidget" class="smart-daily-widget">
                     <div class="smart-daily-icon">🎓</div>
                     <div class="smart-daily-info">
-                        <span id="smartDayTitle" style="font-weight: 600;">Сегодня Воскресенье</span>
-                        <span id="smartDayDesc" style="font-size: 13px; opacity: 0.8;">Выходной день. Отдыхай и набирайся сил!</span>
+                        <span id="smartDayTitle" style="font-weight: 600;">Сегодня</span>
+                        <span id="smartDayDesc" style="font-size: 13px; opacity: 0.8;">Загрузка расписания...</span>
                     </div>
                 </div>
 
@@ -51,21 +49,6 @@
                     <button id="nextMonth">Месяц →</button>
                 </div>
                 <div class="calendar-grid" id="calendarGrid"></div>
-                
-                <!-- Модальное окно заметки на день -->
-                <div id="dayModal" class="day-modal" style="display: none;">
-                    <h3 id="modalDateTitle">Заметка на день</h3>
-                    <textarea id="dayNoteInput" placeholder="Опиши задачи на этот день..."></textarea>
-                    <div class="priority-selector">
-                        <label><input type="radio" name="priority" value="green" checked> 🟢 Легкая</label>
-                        <label><input type="radio" name="priority" value="yellow"> 🟡 Средняя</label>
-                        <label><input type="radio" name="priority" value="red"> 🔴 Тяжелая</label>
-                    </div>
-                    <div class="modal-buttons">
-                        <button id="saveDayNoteBtn">Сохранить</button>
-                        <button id="closeModalBtn">Закрыть</button>
-                    </div>
-                </div>
             </section>
 
             <!-- Вкладка 2: Дневник и оценки -->
