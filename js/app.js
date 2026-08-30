@@ -41,35 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Логика смены фона (YouTube или картинка)
+    // 3. Логика смены фона (Локальный файл .mp4 или картинка)
     const saveBgBtn = document.getElementById('saveBgBtn');
     const bgUrlInput = document.getElementById('bgUrlInput');
-    const youtubeBg = document.getElementById('youtube-bg');
+    const localVideoBg = document.getElementById('local-video-bg');
     const bgImage = document.getElementById('bg-image');
 
     if (saveBgBtn && bgUrlInput) {
         saveBgBtn.addEventListener('click', () => {
-            const url = bgUrlInput.value.trim();
+            const val = bgUrlInput.value.trim();
             
-            // Проверка на YouTube ссылку (поддерживает youtube.com и youtu.be)
-            const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-
-            if (ytMatch && ytMatch[1]) {
-                const videoId = ytMatch[1];
-                if (youtubeBg) {
-                    youtubeBg.style.display = 'block';
-                    youtubeBg.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0" frameborder="0" allow="autoplay"></iframe>`;
+            if (val.endsWith('.mp4') || val.endsWith('.webm')) {
+                if (localVideoBg) {
+                    localVideoBg.style.display = 'block';
+                    const sourceEl = localVideoBg.querySelector('source');
+                    if (sourceEl) {
+                        sourceEl.src = val;
+                        localVideoBg.load();
+                    }
                 }
                 if (bgImage) bgImage.style.display = 'none';
-            } else if (url) {
-                if (youtubeBg) youtubeBg.style.display = 'none';
+            } else if (val) {
+                if (localVideoBg) localVideoBg.style.display = 'none';
                 if (bgImage) {
                     bgImage.style.display = 'block';
-                    bgImage.style.backgroundImage = `url('${url}')`;
+                    bgImage.style.backgroundImage = `url('${val}')`;
                 }
             }
             
-            localStorage.setItem('college_bg', url);
+            localStorage.setItem('college_bg', val);
         });
 
         // Загрузка сохраненного фона при старте
