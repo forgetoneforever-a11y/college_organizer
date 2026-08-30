@@ -3,3 +3,25 @@
 @import url('css/calendar.css');
 @import url('css/cards.css');
 @import url('css/settings.css');
+.bg-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: -999 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+.bg-video {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+}
