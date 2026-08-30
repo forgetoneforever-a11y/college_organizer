@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Organizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Фоновый слой (видео YouTube или картинка) -->
+    <div class="bg-container">
+        <div id="youtube-bg" class="youtube-bg" style="display: none;"></div>
+        <div id="bg-image" class="bg-image"></div>
+    </div>
+
+    <!-- Кнопка мобильного меню -->
+    <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
+
+    <!-- Основной контейнер приложения -->
+    <div class="app-wrapper">
+        <!-- Боковая панель навигации -->
+        <aside id="sidebar" class="glass-panel sidebar">
+            <h2>🎓 Техникум</h2>
+            <nav>
+                <button class="nav-btn active" data-tab="dashboard">Главная (Календарь)</button>
+                <button class="nav-btn" data-tab="diary">Дневник и Оценки</button>
+                <button class="nav-btn" data-tab="tasks">Задания и Будильник</button>
+                <button class="nav-btn" data-tab="settings">Настройки</button>
+            </nav>
+        </aside>
+
+        <!-- Рабочая область -->
+        <main class="glass-panel content">
+            <!-- Вкладка 1: Календарь -->
+            <section id="dashboard" class="tab-content active">
+                
+                <!-- Умная плашка дня (вверху вкладки) -->
+                <div id="smartDailyWidget" class="smart-daily-widget">
+                    <div class="smart-daily-icon">🎓</div>
+                    <div class="smart-daily-info">
+                        <span id="smartDayTitle" style="font-weight: 600;">Сегодня Воскресенье</span>
+                        <span id="smartDayDesc" style="font-size: 13px; opacity: 0.8;">Выходной день. Отдыхай и набирайся сил!</span>
+                    </div>
+                </div>
+
+                <h2>Календарь заметок и загруженности</h2>
+
+                <div class="calendar-header">
+                    <button id="prevMonth">← Месяц</button>
+                    <span id="monthYearTitle" style="font-weight: bold; font-size: 18px;"></span>
+                    <button id="nextMonth">Месяц →</button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+                
+                <!-- Модальное окно заметки на день -->
+                <div id="dayModal" class="day-modal" style="display: none;">
+                    <h3 id="modalDateTitle">Заметка на день</h3>
+                    <textarea id="dayNoteInput" placeholder="Опиши задачи на этот день..."></textarea>
+                    <div class="priority-selector">
+                        <label><input type="radio" name="priority" value="green" checked> 🟢 Легкая</label>
+                        <label><input type="radio" name="priority" value="yellow"> 🟡 Средняя</label>
+                        <label><input type="radio" name="priority" value="red"> 🔴 Тяжелая</label>
+                    </div>
+                    <div class="modal-buttons">
+                        <button id="saveDayNoteBtn">Сохранить</button>
+                        <button id="closeModalBtn">Закрыть</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Вкладка 2: Дневник и оценки -->
+            <section id="diary" class="tab-content">
+                <h2>Дневник оценок</h2>
+                <div class="input-group">
+                    <input type="text" id="subjectInput" placeholder="Предмет (например, Физика)">
+                    <input type="text" id="gradeInput" placeholder="Оценки (например, 5, 4, 5)">
+                    <button id="addGradeBtn">Добавить</button>
+                </div>
+                <ul id="gradesList"></ul>
+            </section>
+
+            <!-- Вкладка 3: Задания и будильник -->
+            <section id="tasks" class="tab-content">
+                <h2>Задания и Будильник</h2>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Новое задание...">
+                    <input type="time" id="alarmTimeInput">
+                    <button id="addTaskBtn">Добавить задачу</button>
+                </div>
+                <ul id="tasksList"></ul>
+            </section>
+
+            <!-- Вкладка 4: Настройки -->
+            <section id="settings" class="tab-content">
+                <h2>Кастомизация и Данные</h2>
+                
+                <div class="setting-item">
+                    <label>Размытие панелей (Blur): <span id="blurValue">16</span>px</label>
+                    <input type="range" id="blurRange" min="0" max="30" value="16">
+                </div>
+                <div class="setting-item">
+                    <label>Прозрачность панелей:</label>
+                    <input type="range" id="opacityRange" min="0.1" max="1" step="0.05" value="0.35">
+                </div>
+                <div class="setting-item">
+                    <label>Ссылка на фон (YouTube или Картинка):</label>
+                    <input type="text" id="bgUrlInput" placeholder="Вставь ссылку...">
+                    <button id="saveBgBtn">Применить фон</button>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
+
+                <h3>Резервная копия данных</h3>
+                <div class="setting-item" style="flex-direction: row; gap: 10px;">
+                    <button id="exportJsonBtn" style="flex: 1;">📥 Экспортировать данные</button>
+                    <button id="importJsonBtn" style="flex: 1;">📤 Импортировать JSON</button>
+                    <input type="file" id="importFileinput" accept=".json" style="display: none;">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
