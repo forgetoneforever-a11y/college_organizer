@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Логика для умной плашки дня
+    // 1. Умная плашка дня
     const smartDayTitle = document.getElementById('smartDayTitle');
     const smartDayDesc = document.getElementById('smartDayDesc');
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Логика переключения вкладок
+    // 2. Переключение вкладок
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -41,42 +41,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Логика смены фона (Локальный файл .mp4 или картинка)
-    const saveBgBtn = document.getElementById('saveBgBtn');
-    const bgUrlInput = document.getElementById('bgUrlInput');
+    // 3. Выбор фона через кнопку с компьютера
+    const selectBgBtn = document.getElementById('selectBgBtn');
+    const bgFileInput = document.getElementById('bgFileInput');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
     const localVideoBg = document.getElementById('local-video-bg');
     const bgImage = document.getElementById('bg-image');
 
-    if (saveBgBtn && bgUrlInput) {
-        saveBgBtn.addEventListener('click', () => {
-            const val = bgUrlInput.value.trim();
-            
-            if (val.endsWith('.mp4') || val.endsWith('.webm')) {
+    if (selectBgBtn && bgFileInput) {
+        selectBgBtn.addEventListener('click', () => {
+            bgFileInput.click();
+        });
+
+        bgFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (fileNameDisplay) {
+                fileNameDisplay.textContent = `Выбран: ${file.name}`;
+            }
+
+            const fileUrl = URL.createObjectURL(file);
+
+            if (file.type.startsWith('video/')) {
                 if (localVideoBg) {
                     localVideoBg.style.display = 'block';
                     const sourceEl = localVideoBg.querySelector('source');
                     if (sourceEl) {
-                        sourceEl.src = val;
+                        sourceEl.src = fileUrl;
                         localVideoBg.load();
                     }
                 }
                 if (bgImage) bgImage.style.display = 'none';
-            } else if (val) {
+            } else if (file.type.startsWith('image/')) {
                 if (localVideoBg) localVideoBg.style.display = 'none';
                 if (bgImage) {
                     bgImage.style.display = 'block';
-                    bgImage.style.backgroundImage = `url('${val}')`;
+                    bgImage.style.backgroundImage = `url('${fileUrl}')`;
                 }
             }
             
-            localStorage.setItem('college_bg', val);
+            localStorage.setItem('college_bg_name', file.name);
         });
-
-        // Загрузка сохраненного фона при старте
-        const savedBg = localStorage.getItem('college_bg');
-        if (savedBg) {
-            bgUrlInput.value = savedBg;
-            saveBgBtn.click();
-        }
     }
 });
