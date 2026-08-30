@@ -63,18 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const fileUrl = URL.createObjectURL(file);
 
-            if (file.type.startsWith('video/')) {
+            if (file.type.startsWith('video/') || file.name.endsWith('.mp4') || file.name.endsWith('.webm')) {
                 if (localVideoBg) {
                     localVideoBg.style.display = 'block';
-                    const sourceEl = localVideoBg.querySelector('source');
-                    if (sourceEl) {
-                        sourceEl.src = fileUrl;
-                        localVideoBg.load();
-                    }
+                    localVideoBg.src = fileUrl;
+                    localVideoBg.load();
+                    localVideoBg.play().catch(err => console.log("Ошибка автовоспроизведения:", err));
                 }
                 if (bgImage) bgImage.style.display = 'none';
             } else if (file.type.startsWith('image/')) {
-                if (localVideoBg) localVideoBg.style.display = 'none';
+                if (localVideoBg) {
+                    localVideoBg.style.display = 'none';
+                    localVideoBg.src = '';
+                }
                 if (bgImage) {
                     bgImage.style.display = 'block';
                     bgImage.style.backgroundImage = `url('${fileUrl}')`;
