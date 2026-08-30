@@ -85,4 +85,61 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('college_bg_name', file.name);
         });
     }
+
+    // 4. Логика Telegram-уведомлений для будильника
+    const tgTokenInput = document.getElementById('tgTokenInput');
+    const tgChatIdInput = document.getElementById('tgChatIdInput');
+    const saveTgBtn = document.getElementById('saveTgBtn');
+
+    if (tgTokenInput && tgChatIdInput && saveTgBtn) {
+        tgTokenInput.value = localStorage.getItem('tg_bot_token') || '';
+        tgChatIdInput.value = localStorage.getItem('tg_chat_id') || '';
+
+        saveTgBtn.addEventListener('click', () => {
+            localStorage.setItem('tg_bot_token', tgTokenInput.value.trim());
+            localStorage.setItem('tg_chat_id', tgChatIdInput.value.trim());
+            alert('Настройки Telegram успешно сохранены!');
+        });
+    }
+
+    async function sendTelegramNotification(message) {
+        const token = localStorage.getItem('tg_bot_token');
+        const chatId = localStorage.getItem('tg_chat_id');
+
+        if (!token || !chatId) return;
+
+        const url = `https://api.telegram.org/bot${token}/sendMessage`;
+        try {
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+        } catch (e) {
+            console.error("Ошибка отправки в Telegram:", e);
+        }
+    }
+
+    // Проверка будильника каждую секунду/минуту
+    setInterval(() => {
+        const alarmInput = document.getElementById('alarmTimeInput');
+        if (!alarmInput || !alarmInput.value) return;
+
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const currentTime = `${hours}:${minutes}`;
+
+        if (alarmInput.value === currentTime) {
+            const lastSent = localStorage.getItem('last_alarm_sent');
+            if (lastSent !== currentTime) {
+                sendTelegramNotification("⏰ **Внимание! Сработал будильник в твоем органайзере!** Пора вставать и собираться в техникум.");
+                localStorage.setItem('last_alarm_sent', currentTime);
+            }
+        }
+    }, 10000);
 });
