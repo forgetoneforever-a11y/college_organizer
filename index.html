@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фоновый слой -->
+    <!-- Фоновый слой (Локальное видео или картинка) -->
     <div class="bg-container">
-        <div id="youtube-bg" class="youtube-bg" style="display: none;"></div>
+        <video id="local-video-bg" class="bg-video" autoplay muted loop playsinline style="display: none;">
+            <source src="" type="video/mp4">
+        </video>
         <div id="bg-image" class="bg-image"></div>
     </div>
-
-    <!-- Кнопка мобильного меню -->
-    <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
 
     <!-- Основной контейнер приложения -->
     <div class="app-wrapper">
@@ -86,8 +85,8 @@
                     <input type="range" id="opacityRange" min="0.1" max="1" step="0.05" value="0.35">
                 </div>
                 <div class="setting-item">
-                    <label>Ссылка на фон (YouTube или Картинка):</label>
-                    <input type="text" id="bgUrlInput" placeholder="Вставь ссылку...">
+                    <label>Фон (Имя файла .mp4 или ссылка на картинку):</label>
+                    <input type="text" id="bgUrlInput" placeholder="например: background.mp4">
                     <button id="saveBgBtn">Применить фон</button>
                 </div>
 
