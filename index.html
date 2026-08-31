@@ -2,134 +2,70 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>College Organizer</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техникум — Главная</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Фоновый слой -->
-    <div class="bg-container">
-        <video id="local-video-bg" class="bg-video" autoplay muted loop playsinline style="display: none;">
-            <source src="" type="video/mp4">
-        </video>
-        <div id="bg-image" class="bg-image"></div>
-    </div>
-
-    <!-- Основной контейнер приложения -->
-    <div class="app-wrapper">
-        <!-- Боковая панель навигации -->
-        <aside id="sidebar" class="glass-panel sidebar">
-            <h2>🎓 Техникум</h2>
-            <nav>
-                <button class="nav-btn active" data-tab="dashboard">Главная (Календарь)</button>
-                <button class="nav-btn" data-tab="diary">Дневник и Оценки</button>
-                <button class="nav-btn" data-tab="tasks">Задания и Будильник</button>
-                <button class="nav-btn" data-tab="settings">Настройки</button>
+    <div class="app-container">
+        <!-- Боковое меню -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span>🎓</span>
+                <h2>Техникум</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link active">Главная (Календарь)</a>
+                <a href="diary.html" class="nav-link">Дневник и Оценки</a>
+                <a href="tasks.html" class="nav-link">Задания и Будильник</a>
+                <a href="settings.html" class="nav-link">Настройки</a>
             </nav>
         </aside>
 
-        <!-- Рабочая область -->
-        <main class="glass-panel content">
-            <!-- Вкладка 1: Календарь и закладки -->
-            <section id="dashboard" class="tab-content active">
-                <div id="smartDailyWidget" class="smart-daily-widget">
-                    <div class="smart-daily-icon">🎓</div>
-                    <div class="smart-daily-info">
-                        <span id="smartDayTitle" style="font-weight: 600;">Сегодня</span>
-                        <span id="smartDayDesc" style="font-size: 13px; opacity: 0.8;">Загрузка расписания...</span>
-                    </div>
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Блок "Сегодня" -->
+            <div class="today-card">
+                <div class="today-icon">🎓</div>
+                <div class="today-info">
+                    <h3>Сегодня</h3>
+                    <p id="todaySchedule">Загрузка расписания...</p>
                 </div>
+            </div>
 
+            <!-- Блок Календаря и Закладок -->
+            <div class="calendar-section">
                 <h2>Календарь и Закладки</h2>
-
-                <div class="calendar-header">
-                    <button id="prevMonth">← Месяц</button>
-                    <span id="monthYearTitle" style="font-weight: bold; font-size: 18px;"></span>
-                    <button id="nextMonth">Месяц →</button>
+                
+                <!-- Навигация по месяцам -->
+                <div class="calendar-nav">
+                    <button id="prevMonth" class="btn-month">← Месяц</button>
+                    <span id="monthYearTitle" class="month-title"></span>
+                    <button id="nextMonth" class="btn-month">Месяц →</button>
                 </div>
+
+                <!-- Дни недели (Пн, Вт, Ср...) -->
+                <div class="weekdays-grid">
+                    <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                </div>
+
+                <!-- Сетка для дней календаря (ВОТ ОН, ПРОПАВШИЙ БЛОК) -->
                 <div class="calendar-grid" id="calendarGrid"></div>
 
-                <!-- Блок закладок и быстрых заметок -->
-                <div class="bookmarks-section" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <h3 style="font-size: 16px; margin-bottom: 12px;">📌 Быстрые закладки на день</h3>
-                    <div class="input-group" style="margin-bottom: 12px;">
+                <!-- Быстрые закладки -->
+                <div class="bookmarks-section">
+                    <h3>📌 Быстрые закладки на день</h3>
+                    <div class="bookmark-input-group">
                         <input type="text" id="bookmarkInput" placeholder="Название закладки или ссылка...">
-                        <button id="addBookmarkBtn">Добавить</button>
+                        <button id="addBookmarkBtn" class="btn-add">Добавить</button>
                     </div>
-                    <ul id="bookmarksList" style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px;"></ul>
+                    <div id="bookmarksList" class="bookmarks-list"></div>
                 </div>
-            </section>
-
-            <!-- Вкладка 2: Дневник и оценки -->
-            <section id="diary" class="tab-content">
-                <h2>Дневник оценок</h2>
-                <div class="input-group">
-                    <input type="text" id="subjectInput" placeholder="Предмет (например, Физика)">
-                    <input type="text" id="gradeInput" placeholder="Оценки (например, 5, 4, 5)">
-                    <button id="addGradeBtn">Добавить</button>
-                </div>
-                <ul id="gradesList"></ul>
-            </section>
-
-            <!-- Вкладка 3: Задания, медиа и будильник -->
-            <section id="tasks" class="tab-content">
-                <h2>Задания, Медиа и Будильник</h2>
-                <div class="input-group" style="flex-direction: column; gap: 10px;">
-                    <input type="text" id="taskInput" placeholder="Текст задачи / заметки...">
-                    <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
-                        <input type="time" id="alarmTimeInput" style="flex: 1;">
-                        <select id="prioritySelect" style="flex: 1; padding: 8px; border-radius: 6px; background: rgba(0,0,0,0.2); color: inherit; border: 1px solid rgba(255,255,255,0.2);">
-                            <option value="green">🟩 Не совсем</option>
-                            <option value="blue" selected>🟦 Нужно бы</option>
-                            <option value="red">🟥 Очень нужно</option>
-                        </select>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-                        <input type="file" id="mediaFileInput" accept="image/*,video/mp4" style="display: none;">
-                        <button id="selectMediaBtn" class="action-btn" style="flex: 1;">📎 Добавить фото / MP4</button>
-                        <span id="mediaFileName" style="font-size: 12px; opacity: 0.7;">Файл не выбран</span>
-                    </div>
-                    <button id="addTaskBtn" style="width: 100%;">Добавить задачу</button>
-                </div>
-
-                <!-- Настройки Telegram -->
-                <div class="setting-item" style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;">
-                    <label style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block;">📱 Telegram уведомления:</label>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <input type="text" id="tgTokenInput" placeholder="Токен бота" style="flex: 1; min-width: 180px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
-                        <input type="text" id="tgChatIdInput" placeholder="Chat ID" style="width: 130px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
-                        <button id="saveTgBtn" class="action-btn" style="padding: 8px 16px;">Сохранить</button>
-                    </div>
-                </div>
-
-                <ul id="tasksList" style="margin-top: 20px;"></ul>
-            </section>
-
-            <!-- Вкладка 4: Настройки -->
-            <section id="settings" class="tab-content">
-                <h2>Кастомизация и Данные</h2>
-                
-                <div class="setting-item">
-                    <label>Размытие панелей (Blur): <span id="blurValue">16</span>px</label>
-                    <input type="range" id="blurRange" min="0" max="30" value="16">
-                </div>
-                <div class="setting-item">
-                    <label>Прозрачность панелей:</label>
-                    <input type="range" id="opacityRange" min="0.1" max="1" step="0.05" value="0.35">
-                </div>
-                
-                <div class="setting-item">
-                    <label>Фон (Видео .mp4 или картинка):</label>
-                    <input type="file" id="bgFileInput" accept="video/mp4,image/*" style="display: none;">
-                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
-                        <button id="selectBgBtn" class="action-btn" style="width: 100%;">📁 Выбрать файл с компьютера</button>
-                        <span id="fileNameDisplay" style="font-size: 12px; color: #ffffff; background: rgba(0, 0, 0, 0.4); padding: 4px 8px; border-radius: 6px; width: fit-content; text-shadow: 0 1px 2px rgba(0,0,0,0.8);">Файл не выбран</span>
-                    </div>
-                </div>
-            </section>
+            </div>
         </main>
     </div>
 
+    <!-- Подключаем основной скрипт как модуль -->
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
