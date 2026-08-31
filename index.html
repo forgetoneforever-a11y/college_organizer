@@ -2,12 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>College Organizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фоновый слой (Видео или Картинка) -->
+    <!-- Фоновый слой -->
     <div class="bg-container">
         <video id="local-video-bg" class="bg-video" autoplay muted loop playsinline style="display: none;">
             <source src="" type="video/mp4">
@@ -30,7 +30,7 @@
 
         <!-- Рабочая область -->
         <main class="glass-panel content">
-            <!-- Вкладка 1: Календарь -->
+            <!-- Вкладка 1: Календарь и закладки -->
             <section id="dashboard" class="tab-content active">
                 <div id="smartDailyWidget" class="smart-daily-widget">
                     <div class="smart-daily-icon">🎓</div>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <h2>Календарь заметок и загруженности</h2>
+                <h2>Календарь и Закладки</h2>
 
                 <div class="calendar-header">
                     <button id="prevMonth">← Месяц</button>
@@ -61,20 +61,33 @@
                 <ul id="gradesList"></ul>
             </section>
 
-            <!-- Вкладка 3: Задания и будильник -->
+            <!-- Вкладка 3: Задания, медиа и будильник -->
             <section id="tasks" class="tab-content">
-                <h2>Задания и Будильник</h2>
-                <div class="input-group">
-                    <input type="text" id="taskInput" placeholder="Новое задание...">
-                    <input type="time" id="alarmTimeInput">
-                    <button id="addTaskBtn">Добавить задачу</button>
+                <h2>Задания, Медиа и Будильник</h2>
+                <div class="input-group" style="flex-direction: column; gap: 10px;">
+                    <input type="text" id="taskInput" placeholder="Текст задачи / заметки...">
+                    <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
+                        <input type="time" id="alarmTimeInput" style="flex: 1;">
+                        <select id="prioritySelect" style="flex: 1; padding: 8px; border-radius: 6px; background: rgba(0,0,0,0.2); color: inherit; border: 1px solid rgba(255,255,255,0.2);">
+                            <option value="green">🟩 Не совсем</option>
+                            <option value="blue" selected>🟦 Нужно бы</option>
+                            <option value="red">🟥 Очень нужно</option>
+                        </select>
+                    </div>
+                    <!-- Загрузка фото или MP4 -->
+                    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+                        <input type="file" id="mediaFileInput" accept="image/*,video/mp4" style="display: none;">
+                        <button id="selectMediaBtn" class="action-btn" style="flex: 1;">📎 Добавить фото / MP4</button>
+                        <span id="mediaFileName" style="font-size: 12px; opacity: 0.7;">Файл не выбран</span>
+                    </div>
+                    <button id="addTaskBtn" style="width: 100%;">Добавить задачу</button>
                 </div>
 
-                <!-- Настройки Telegram уведомлений для будильника -->
+                <!-- Настройки Telegram -->
                 <div class="setting-item" style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;">
-                    <label style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block;">📱 Telegram уведомления для будильника:</label>
+                    <label style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: block;">📱 Telegram уведомления:</label>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <input type="text" id="tgTokenInput" placeholder="Токен бота (от BotFather)" style="flex: 1; min-width: 180px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
+                        <input type="text" id="tgTokenInput" placeholder="Токен бота" style="flex: 1; min-width: 180px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
                         <input type="text" id="tgChatIdInput" placeholder="Chat ID" style="width: 130px; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: inherit;">
                         <button id="saveTgBtn" class="action-btn" style="padding: 8px 16px;">Сохранить</button>
                     </div>
@@ -96,21 +109,11 @@
                     <input type="range" id="opacityRange" min="0.1" max="1" step="0.05" value="0.35">
                 </div>
                 
-                <!-- Настройка фона через выбор файла с компьютера -->
                 <div class="setting-item">
                     <label>Фон (Видео .mp4 или картинка):</label>
                     <input type="file" id="bgFileInput" accept="video/mp4,image/*" style="display: none;">
                     <button id="selectBgBtn" class="action-btn">📁 Выбрать файл с компьютера</button>
                     <span id="fileNameDisplay" style="font-size: 12px; opacity: 0.7; margin-top: 5px;">Файл не выбран</span>
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 20px 0;">
-
-                <h3>Резервная копия данных</h3>
-                <div class="setting-item" style="flex-direction: row; gap: 10px;">
-                    <button id="exportJsonBtn" style="flex: 1;">📥 Экспортировать данные</button>
-                    <button id="importJsonBtn" style="flex: 1;">📤 Импортировать JSON</button>
-                    <input type="file" id="importFileinput" accept=".json" style="display: none;">
                 </div>
             </section>
         </main>
