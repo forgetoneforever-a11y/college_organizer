@@ -48,6 +48,18 @@
                     <button id="nextMonth">Месяц →</button>
                 </div>
                 <div class="calendar-grid" id="calendarGrid"></div>
+
+                <!-- Блок закладок и быстрых заметок -->
+                <div class="bookmarks-section" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    <h3 style="font-size: 16px; margin-bottom: 12px;">📌 Быстрые закладки на день</h3>
+                    <div class="input-group" style="margin-bottom: 12px;">
+                        <input type="text" id="bookmarkInput" placeholder="Название закладки или ссылка...">
+                        <button id="addBookmarkBtn">Добавить</button>
+                    </div>
+                    <ul id="bookmarksList" style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Сюда будут добавляться закладки через JS -->
+                    </ul>
+                </div>
             </section>
 
             <!-- Вкладка 2: Дневник и оценки -->
