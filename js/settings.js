@@ -2,7 +2,10 @@ export function initSettings() {
     const toggleBgBtn = document.getElementById("toggleBgBtn");
     const bgStatus = document.getElementById("bgStatus");
     
-    if (!toggleBgBtn) return;
+    if (!toggleBgBtn) {
+        console.warn("Элемент toggleBgBtn не найден на странице!");
+        return;
+    }
 
     let bgMode = localStorage.getItem("bgMode") || "dark";
 
