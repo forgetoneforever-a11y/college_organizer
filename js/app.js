@@ -303,9 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = event.target.result;
                 
                 if (file.type.startsWith('video')) {
-                    if (file.size > 4 * 1024 * 1024) {
-                        alert('Видео слишком большое! Оно показано сейчас, но после обновления страницы сбросится. Используйте файл меньше 4 МБ или картинку.');
-                    }
                     bgVideo.src = result;
                     bgVideo.style.display = 'block';
                     bgImage.style.display = 'none';
@@ -313,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('college_bg', result);
                         localStorage.setItem('college_bg_type', 'video');
                     } catch (err) {
-                        console.warn('Видео слишком велико для хранения в localStorage');
+                        console.warn('Видео слишком велико для сохранения в localStorage, но установлено сессионно.');
                     }
                 } else {
                     bgImage.style.backgroundImage = `url(${result})`;
