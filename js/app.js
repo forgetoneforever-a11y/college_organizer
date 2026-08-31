@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
         weekDays.forEach(day => {
             const h = document.createElement('div');
-            h.style.cssText = "font-weight: bold; text-align: center; opacity: 0.7; padding: 5px;";
+            h.style.cssText = "font-weight: bold; text-align: center; opacity: 0.7; padding: 8px;";
             h.textContent = day;
             calendarGrid.appendChild(h);
         });
@@ -48,19 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let day = 1; day <= totalDays; day++) {
             const cell = document.createElement('div');
-            cell.style.cssText = "min-height: 80px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 6px; position: relative;";
+            cell.style.cssText = "min-height: 100px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px; position: relative;";
             
             let dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            cell.innerHTML = `<span style="font-weight: 600; font-size: 13px;">${day}</span>`;
+            cell.innerHTML = `<span style="font-weight: 600; font-size: 14px;">${day}</span>`;
 
-            // Отображение закладок с цветами приоритетов
             const dayTasks = tasks.filter(t => t.date === dateStr);
-            let badgesHtml = '<div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px;">';
+            let badgesHtml = '<div style="display: flex; flex-direction: column; gap: 4px; margin-top: 6px;">';
             
             const colors = { green: '#28a745', blue: '#007bff', red: '#dc3545' };
             dayTasks.forEach(dt => {
                 let bgCol = colors[dt.priority] || '#007bff';
-                badgesHtml += `<div style="font-size: 10px; background: ${bgCol}; padding: 2px 4px; border-radius: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dt.text}</div>`;
+                badgesHtml += `<div style="font-size: 11px; background: ${bgCol}; padding: 3px 6px; border-radius: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dt.text}</div>`;
             });
             badgesHtml += '</div>';
             cell.innerHTML += badgesHtml;
@@ -91,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Загрузка медиа (фото/видео) для задач
+    // 4. Загрузка медиа для задач
     const selectMediaBtn = document.getElementById('selectMediaBtn');
     const mediaFileInput = document.getElementById('mediaFileInput');
     const mediaFileName = document.getElementById('mediaFileName');
@@ -114,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Задачи, будильники и приоритеты
+    // 5. Задачи и будильники
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskInput = document.getElementById('taskInput');
     const alarmTimeInput = document.getElementById('alarmTimeInput');
@@ -134,24 +133,24 @@ document.addEventListener('DOMContentLoaded', () => {
         tasksList.innerHTML = '';
         tasks.forEach((item, index) => {
             const li = document.createElement('li');
-            li.style.cssText = "display: flex; flex-direction: column; gap: 6px; padding: 12px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid " + (item.priority === 'red' ? '#dc3545' : item.priority === 'green' ? '#28a745' : '#007bff') + ";";
+            li.style.cssText = "display: flex; flex-direction: column; gap: 8px; padding: 14px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border-radius: 8px; border-left: 4px solid " + (item.priority === 'red' ? '#dc3545' : item.priority === 'green' ? '#28a745' : '#007bff') + ";";
             
             let content = `<div style="display: flex; justify-content: space-between; align-items: center;"><span>${item.text || 'Задача'}</span>`;
             if (item.alarm) {
-                content += `<span style="font-size: 11px; background: rgba(0,255,100,0.2); padding: 2px 6px; border-radius: 4px;">⏰ ${item.alarm}</span>`;
+                content += `<span style="font-size: 12px; background: rgba(0,255,100,0.2); padding: 3px 8px; border-radius: 4px;">⏰ ${item.alarm}</span>`;
             }
             content += `</div>`;
 
             if (item.media) {
                 if (item.media.type === 'image') {
-                    content += `<img src="${item.media.url}" style="max-height: 120px; border-radius: 6px; object-fit: cover;">`;
+                    content += `<img src="${item.media.url}" style="max-height: 150px; border-radius: 6px; object-fit: cover;">`;
                 } else {
-                    content += `<video src="${item.media.url}" controls style="max-height: 120px; border-radius: 6px; width: 100%;"></video>`;
+                    content += `<video src="${item.media.url}" controls style="max-height: 150px; border-radius: 6px; width: 100%;"></video>`;
                 }
             }
 
             const delBtn = document.createElement('button');
-            delBtn.style.cssText = "background: transparent; border: none; color: #ff5555; cursor: pointer; font-size: 12px; align-self: flex-end;";
+            delBtn.style.cssText = "background: transparent; border: none; color: #ff5555; cursor: pointer; font-size: 13px; align-self: flex-end;";
             delBtn.textContent = 'Удалить';
             delBtn.onclick = () => { tasks.splice(index, 1); saveAndRenderTasks(); };
 
@@ -190,7 +189,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTasks();
 
-    // 6. Telegram настройки и уведомления
+    // 6. Настройки кастомизации (Фон, Размытие, Прозрачность)
+    const blurRange = document.getElementById('blurRange');
+    const blurValue = document.getElementById('blurValue');
+    const opacityRange = document.getElementById('opacityRange');
+    const selectBgBtn = document.getElementById('selectBgBtn');
+    const bgFileInput = document.getElementById('bgFileInput');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const bgVideo = document.getElementById('local-video-bg');
+    const bgImage = document.getElementById('bg-image');
+
+    // Восстановление настроек из localStorage
+    const savedBlur = localStorage.getItem('college_blur') || '16';
+    const savedOpacity = localStorage.getItem('college_opacity') || '0.35';
+    const savedBg = localStorage.getItem('college_bg');
+    const savedBgType = localStorage.getItem('college_bg_type');
+
+    document.documentElement.style.setProperty('--blur-strength', `${savedBlur}px`);
+    document.documentElement.style.setProperty('--glass-bg', `rgba(20, 20, 30, ${savedOpacity})`);
+    if (blurRange) blurRange.value = savedBlur;
+    if (blurValue) blurValue.textContent = savedBlur;
+    if (opacityRange) opacityRange.value = savedOpacity;
+
+    if (savedBg) {
+        if (savedBgType === 'video') {
+            bgVideo.src = savedBg;
+            bgVideo.style.display = 'block';
+            bgImage.style.display = 'none';
+        } else {
+            bgImage.style.backgroundImage = `url(${savedBg})`;
+            bgImage.style.display = 'block';
+            bgVideo.style.display = 'none';
+        }
+    }
+
+    // Обработка ползунков
+    if (blurRange && blurValue) {
+        blurRange.addEventListener('input', (e) => {
+            const val = e.target.value;
+            blurValue.textContent = val;
+            document.documentElement.style.setProperty('--blur-strength', `${val}px`);
+            localStorage.setItem('college_blur', val);
+        });
+    }
+
+    if (opacityRange) {
+        opacityRange.addEventListener('input', (e) => {
+            const val = e.target.value;
+            document.documentElement.style.setProperty('--glass-bg', `rgba(20, 20, 30, ${val})`);
+            localStorage.setItem('college_opacity', val);
+        });
+    }
+
+    // Кнопка выбора фона (теперь кликабельная!)
+    if (selectBgBtn && bgFileInput) {
+        selectBgBtn.addEventListener('click', () => bgFileInput.click());
+
+        bgFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            fileNameDisplay.textContent = file.name;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const result = event.target.result;
+                if (file.type.startsWith('video')) {
+                    bgVideo.src = result;
+                    bgVideo.style.display = 'block';
+                    bgImage.style.display = 'none';
+                    localStorage.setItem('college_bg', result);
+                    localStorage.setItem('college_bg_type', 'video');
+                } else {
+                    bgImage.style.backgroundImage = `url(${result})`;
+                    bgImage.style.display = 'block';
+                    bgVideo.style.display = 'none';
+                    localStorage.setItem('college_bg', result);
+                    localStorage.setItem('college_bg_type', 'image');
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // 7. Telegram уведомления
     const tgTokenInput = document.getElementById('tgTokenInput');
     const tgChatIdInput = document.getElementById('tgChatIdInput');
     const saveTgBtn = document.getElementById('saveTgBtn');
