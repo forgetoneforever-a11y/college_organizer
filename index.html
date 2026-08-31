@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Техникум — Главная</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Подключаем объединенный файл стилей -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
@@ -44,12 +45,12 @@
                     <button id="nextMonth" class="btn-month">Месяц →</button>
                 </div>
 
-                <!-- Дни недели (Пн, Вт, Ср...) -->
+                <!-- Дни недели -->
                 <div class="weekdays-grid">
                     <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
                 </div>
 
-                <!-- Сетка для дней календаря (ВОТ ОН, ПРОПАВШИЙ БЛОК) -->
+                <!-- Сетка для дней календаря -->
                 <div class="calendar-grid" id="calendarGrid"></div>
 
                 <!-- Быстрые закладки -->
@@ -65,7 +66,7 @@
         </main>
     </div>
 
-    <!-- Подключаем основной скрипт как модуль -->
+    <!-- Подключаем основной скрипт -->
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
