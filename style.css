@@ -188,7 +188,6 @@ input[type="text"], input[type="time"] {
     font-size: 14px;
 }
 
-/* Стили для таблиц оценок */
 .grades-table {
     width: 100%;
     border-collapse: collapse;
