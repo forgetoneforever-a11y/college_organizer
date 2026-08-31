@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фоновый контейнер -->
     <div class="bg-container">
         <video id="local-video-bg" class="bg-video" autoplay muted loop playsinline style="display: none;">
             <source src="" type="video/mp4">
@@ -15,9 +14,7 @@
         <div id="bg-image" class="bg-image"></div>
     </div>
 
-    <!-- Основная обертка интерфейса -->
     <div class="app-wrapper">
-        <!-- Боковое меню -->
         <aside class="glass-panel sidebar">
             <div class="sidebar-logo" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                 <span style="font-size: 24px;">🎓</span>
@@ -31,50 +28,63 @@
             </nav>
         </aside>
 
-        <!-- Основной контент -->
         <main class="glass-panel content">
-            <!-- Блок "Сегодня" -->
-            <div class="smart-daily-widget">
-                <div class="smart-daily-icon" style="font-size: 24px;">🎓</div>
-                <div class="smart-daily-info">
-                    <h3 style="margin: 0 0 4px 0; font-size: 16px;">Сегодня</h3>
-                    <p id="todaySchedule" style="margin: 0; font-size: 14px; opacity: 0.8;">Загрузка расписания...</p>
-                </div>
-            </div>
-
-            <!-- Блок Календаря и Закладок -->
-            <div class="calendar-section">
-                <h2 style="margin-top: 0; margin-bottom: 20px;">Календарь и Закладки</h2>
-                
-                <!-- Навигация по месяцам -->
-                <div class="calendar-header">
-                    <button id="prevMonth">← Месяц</button>
-                    <span id="monthYearTitle" class="month-title" style="font-weight: bold; font-size: 16px;"></span>
-                    <button id="nextMonth">Месяц →</button>
-                </div>
-
-                <!-- Дни недели -->
-                <div class="weekdays-grid">
-                    <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
-                </div>
-
-                <!-- Сетка для дней календаря (сюда JS будет выводить числа) -->
-                <div class="calendar-grid" id="calendarGrid"></div>
-
-                <!-- Быстрые закладки -->
-                <div class="bookmarks-section" style="margin-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
-                    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px;">📌 Быстрые закладки на день</h3>
-                    <div class="input-group">
-                        <input type="text" id="bookmarkInput" placeholder="Название закладки или ссылка...">
-                        <button id="addBookmarkBtn">Добавить</button>
+            <!-- Вкладка 1: Главная (Календарь) -->
+            <section id="dashboard" class="tab-content active">
+                <div class="smart-daily-widget">
+                    <div class="smart-daily-icon" style="font-size: 24px;">🎓</div>
+                    <div class="smart-daily-info">
+                        <h3 style="margin: 0 0 4px 0; font-size: 16px;">Сегодня</h3>
+                        <p id="todaySchedule" style="margin: 0; font-size: 14px; opacity: 0.8;">Загрузка расписания...</p>
                     </div>
-                    <div id="bookmarksList" class="bookmarks-list"></div>
                 </div>
-            </div>
+
+                <div class="calendar-section">
+                    <h2 style="margin-top: 0; margin-bottom: 20px;">Календарь и Закладки</h2>
+                    
+                    <div class="calendar-header">
+                        <button id="prevMonth">← Месяц</button>
+                        <span id="monthYearTitle" class="month-title" style="font-weight: bold; font-size: 16px;"></span>
+                        <button id="nextMonth">Месяц →</button>
+                    </div>
+
+                    <div class="weekdays-grid">
+                        <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                    </div>
+
+                    <div class="calendar-grid" id="calendarGrid"></div>
+
+                    <div class="bookmarks-section" style="margin-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
+                        <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px;">📌 Быстрые закладки на день</h3>
+                        <div class="input-group">
+                            <input type="text" id="bookmarkInput" placeholder="Название закладки или ссылка...">
+                            <button id="addBookmarkBtn">Добавить</button>
+                        </div>
+                        <div id="bookmarksList" class="bookmarks-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Вкладка 2: Дневник и Оценки -->
+            <section id="diary" class="tab-content">
+                <h2 style="margin-top: 0;">Дневник и Оценки</h2>
+                <p style="opacity: 0.8;">Здесь будет отображаться дневник и успеваемость по технологии машиностроения.</p>
+            </section>
+
+            <!-- Вкладка 3: Задания и Будильник -->
+            <section id="tasks" class="tab-content">
+                <h2 style="margin-top: 0;">Задания и Будильник</h2>
+                <p style="opacity: 0.8;">Список учебных заданий и настройка уведомлений.</p>
+            </section>
+
+            <!-- Вкладка 4: Настройки -->
+            <section id="settings" class="tab-content">
+                <h2 style="margin-top: 0;">Настройки</h2>
+                <p style="opacity: 0.8;">Параметры внешнего вида, тем и фоновых видео/картинок.</p>
+            </section>
         </main>
     </div>
 
-    <!-- Основной скрипт -->
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
