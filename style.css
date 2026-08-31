@@ -3,6 +3,7 @@
 @import url('css/calendar.css');
 @import url('css/cards.css');
 @import url('css/settings.css');
+
 :root {
     --glass-bg: rgba(20, 20, 30, 0.35);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -121,6 +122,13 @@ body {
 
 .tab-content.active {
     display: block;
+}
+
+/* Добавлено ограничение высоты и скролл для вкладки настроек */
+#settings.tab-content.active {
+    max-height: 75vh;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .smart-daily-widget {
