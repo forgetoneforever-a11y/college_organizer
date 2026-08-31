@@ -3,28 +3,6 @@
 @import url('css/calendar.css');
 @import url('css/cards.css');
 @import url('css/settings.css');
-.bg-container {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: -999 !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
-}
-
-.bg-video {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    object-fit: cover !important;
-}
 :root {
     --glass-bg: rgba(20, 20, 30, 0.35);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -74,13 +52,16 @@ body {
     display: none;
 }
 
+/* Растянутый интерфейс на ПК */
 .app-wrapper {
     display: flex;
-    max-width: 1200px;
-    margin: 30px auto;
-    gap: 20px;
-    padding: 0 15px;
+    width: 96vw;
+    max-width: 1600px;
+    margin: 20px auto;
+    gap: 25px;
+    padding: 0 10px;
     box-sizing: border-box;
+    min-height: 92vh;
 }
 
 .glass-panel {
@@ -93,8 +74,8 @@ body {
 }
 
 .sidebar {
-    width: 260px;
-    padding: 20px;
+    width: 300px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -104,19 +85,19 @@ body {
 .sidebar nav {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .nav-btn, .action-btn, button {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-radius: 8px;
     cursor: pointer;
     text-align: left;
     transition: 0.2s;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .nav-btn:hover, .action-btn:hover, button:hover {
@@ -130,7 +111,7 @@ body {
 
 .content {
     flex: 1;
-    padding: 25px;
+    padding: 35px;
     box-sizing: border-box;
 }
 
@@ -145,11 +126,11 @@ body {
 .smart-daily-widget {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     background: rgba(255, 255, 255, 0.05);
-    padding: 12px 16px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -157,28 +138,41 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    gap: 10px;
 }
 
 .input-group {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 input[type="text"], input[type="time"] {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     color: white;
+    font-size: 14px;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setting-item input[type="range"] {
+    width: 100%;
+    cursor: pointer;
 }
 
 /* Мобильная адаптивность */
@@ -186,6 +180,7 @@ input[type="text"], input[type="time"] {
     .app-wrapper {
         flex-direction: column;
         margin: 10px;
+        width: 100%;
         padding: 0;
     }
     .sidebar {
