@@ -123,7 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let tasks = JSON.parse(localStorage.getItem('college_tasks') || '[]');
 
     function saveAndRenderTasks() {
-        localStorage.setItem('college_tasks', JSON.stringify(tasks));
+        try {
+            localStorage.setItem('college_tasks', JSON.stringify(tasks));
+        } catch (e) {
+            alert('Ошибка: Память заполнена! Слишком большой файл.');
+        }
         renderTasks();
         renderCalendar();
     }
@@ -189,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTasks();
 
-    // 6. Настройки кастомизации (Фон, Размытие, Прозрачность)
+    // 6. Настройки кастомизации с защитой сохранения
     const blurRange = document.getElementById('blurRange');
     const blurValue = document.getElementById('blurValue');
     const opacityRange = document.getElementById('opacityRange');
@@ -199,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgVideo = document.getElementById('local-video-bg');
     const bgImage = document.getElementById('bg-image');
 
-    // Восстановление настроек из localStorage
     const savedBlur = localStorage.getItem('college_blur') || '16';
     const savedOpacity = localStorage.getItem('college_opacity') || '0.35';
     const savedBg = localStorage.getItem('college_bg');
@@ -223,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Обработка ползунков
     if (blurRange && blurValue) {
         blurRange.addEventListener('input', (e) => {
             const val = e.target.value;
@@ -241,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Кнопка выбора фона (теперь кликабельная!)
     if (selectBgBtn && bgFileInput) {
         selectBgBtn.addEventListener('click', () => bgFileInput.click());
 
@@ -253,18 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const result = event.target.result;
-                if (file.type.startsWith('video')) {
-                    bgVideo.src = result;
-                    bgVideo.style.display = 'block';
-                    bgImage.style.display = 'none';
-                    localStorage.setItem('college_bg', result);
-                    localStorage.setItem('college_bg_type', 'video');
-                } else {
-                    bgImage.style.backgroundImage = `url(${result})`;
-                    bgImage.style.display = 'block';
-                    bgVideo.style.display = 'none';
-                    localStorage.setItem('college_bg', result);
-                    localStorage.setItem('college_bg_type', 'image');
+                try {
+                    if (file.type.startsWith('video')) {
+                        bgVideo.src = result;
+                        bgVideo.style.display = 'block';
+                        bgImage.style.display = 'none';
+                        localStorage.setItem('college_bg', result);
+                        localStorage.setItem('college_bg_type', 'video');
+                    } else {
+                        bgImage.style.backgroundImage = `url(${result})`;
+                        bgImage.style.display = 'block';
+                        bgVideo.style.display = 'none';
+                        localStorage.setItem('college_bg', result);
+                        localStorage.setItem('college_bg_type', 'image');
+                    }
+                } catch (err) {
+                    alert('Видео слишком большое для сохранения в память браузера! Выберите файл меньшего размера.');
                 }
             };
             reader.readAsDataURL(file);
