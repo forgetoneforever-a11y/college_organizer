@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initTabs();
     initCalendar();
     loadTodaySchedule();
+    initSettings();
 });
 
 function initTabs() {
@@ -88,4 +89,38 @@ function loadTodaySchedule() {
     if (scheduleEl) {
         scheduleEl.textContent = "Вторник: Технология машиностроения (2 курс).";
     }
+}
+
+function initSettings() {
+    let bgMode = localStorage.getItem("bgMode") || "dark";
+
+    function updateBgState() {
+        const bgStatus = document.getElementById("bgStatus");
+        if (bgMode === "dark") {
+            document.body.style.backgroundColor = "#0b0b10";
+            if (bgStatus) bgStatus.textContent = "Текущий режим: Тёмный минимализм";
+        } else if (bgMode === "contrast") {
+            document.body.style.backgroundColor = "#161b22";
+            if (bgStatus) bgStatus.textContent = "Текущий режим: Глубокий синий";
+        } else {
+            document.body.style.backgroundColor = "#1f1f1f";
+            if (bgStatus) bgStatus.textContent = "Текущий режим: Студийный серый";
+        }
+    }
+
+    document.addEventListener("click", (event) => {
+        if (event.target && event.target.id === "toggleBgBtn") {
+            if (bgMode === "dark") {
+                bgMode = "contrast";
+            } else if (bgMode === "contrast") {
+                bgMode = "gray";
+            } else {
+                bgMode = "dark";
+            }
+            localStorage.setItem("bgMode", bgMode);
+            updateBgState();
+        }
+    });
+
+    updateBgState();
 }
