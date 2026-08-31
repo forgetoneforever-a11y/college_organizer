@@ -112,8 +112,10 @@
                 <div class="setting-item">
                     <label>Фон (Видео .mp4 или картинка):</label>
                     <input type="file" id="bgFileInput" accept="video/mp4,image/*" style="display: none;">
-                    <button id="selectBgBtn" class="action-btn">📁 Выбрать файл с компьютера</button>
-                    <span id="fileNameDisplay" style="font-size: 12px; opacity: 0.7; margin-top: 5px;">Файл не выбран</span>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 5px;">
+                        <button id="selectBgBtn" class="action-btn" style="width: 100%;">📁 Выбрать файл с компьютера</button>
+                        <span id="fileNameDisplay" style="font-size: 12px; opacity: 0.7;">Файл не выбран</span>
+                    </div>
                 </div>
             </section>
         </main>
