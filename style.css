@@ -136,7 +136,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Исправленный блок шапки календаря (фиксирует нормальное расположение кнопок и текста) */
 .calendar-header {
     display: flex !important;
     justify-content: space-between !important;
@@ -187,6 +186,27 @@ input[type="text"], input[type="time"] {
     border-radius: 8px;
     color: white;
     font-size: 14px;
+}
+
+/* Стили для таблиц оценок */
+.grades-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.grades-table th, .grades-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.grades-table th {
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 600;
 }
 
 @media (max-width: 768px) {
