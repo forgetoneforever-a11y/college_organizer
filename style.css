@@ -124,13 +124,6 @@ body {
     display: block;
 }
 
-/* Добавлено ограничение высоты и скролл для вкладки настроек */
-#settings.tab-content.active {
-    max-height: 75vh;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
 .smart-daily-widget {
     display: flex;
     align-items: center;
@@ -147,6 +140,16 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+/* Строгий фикс для дней недели, чтобы они шли ровно в ряд */
+.weekdays-grid {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    margin-bottom: 12px !important;
+    opacity: 0.8;
 }
 
 .calendar-grid {
@@ -169,18 +172,6 @@ input[type="text"], input[type="time"] {
     border-radius: 8px;
     color: white;
     font-size: 14px;
-}
-
-.setting-item {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.setting-item input[type="range"] {
-    width: 100%;
-    cursor: pointer;
 }
 
 /* Мобильная адаптивность */
