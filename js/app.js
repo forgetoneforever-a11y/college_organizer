@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const blurValue = document.getElementById('blurValue');
     const opacityRange = document.getElementById('opacityRange');
 
-    // Загрузка сохраненных настроек
     const savedBlur = localStorage.getItem('college_blur');
     const savedOpacity = localStorage.getItem('college_opacity');
 
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. Выбор и загрузка фонового файла ---
+    // --- 3. Выбор фонового файла ---
     const selectBgBtn = document.getElementById('selectBgBtn');
     const bgFileInput = document.getElementById('bgFileInput');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
@@ -63,18 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgImage = document.getElementById('bg-image');
 
     if (selectBgBtn && bgFileInput) {
-        selectBgBtn.addEventListener('click', () => {
-            bgFileInput.click();
-        });
+        selectBgBtn.addEventListener('click', () => bgFileInput.click());
 
         bgFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
-            if (fileNameDisplay) {
-                fileNameDisplay.textContent = file.name;
-            }
-
+            if (fileNameDisplay) fileNameDisplay.textContent = file.name;
             const fileURL = URL.createObjectURL(file);
 
             if (file.type.startsWith('video/')) {
@@ -91,13 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     localVideoBg.style.display = 'none';
                 }
             }
-
-            localStorage.setItem('college_bg_type', file.type);
-            localStorage.setItem('college_bg_name', file.name);
         });
     }
 
-    // --- 4. Логика закладок на главной вкладке (Календарь) ---
+    // --- 4. Логика закладок ---
     const bookmarkInput = document.getElementById('bookmarkInput');
     const addBookmarkBtn = document.getElementById('addBookmarkBtn');
     const bookmarksList = document.getElementById('bookmarksList');
