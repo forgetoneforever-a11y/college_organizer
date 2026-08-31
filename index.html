@@ -67,20 +67,56 @@
 
             <!-- Вкладка 2: Дневник и Оценки -->
             <section id="diary" class="tab-content">
-                <h2 style="margin-top: 0;">Дневник и Оценки</h2>
-                <p style="opacity: 0.8;">Здесь будет отображаться дневник и успеваемость по технологии машиностроения.</p>
+                <h2 style="margin-top: 0; margin-bottom: 15px;">Дневник и Успеваемость</h2>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Технология машиностроения (2 курс)</p>
+                
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Предмет / Модуль</th>
+                            <th>Оценки</th>
+                            <th>Средний балл</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Технологическое оборудование</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>Программирование станков с ЧПУ</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>Метрология, стандартизация и сертификация</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
             <!-- Вкладка 3: Задания и Будильник -->
             <section id="tasks" class="tab-content">
-                <h2 style="margin-top: 0;">Задания и Будильник</h2>
-                <p style="opacity: 0.8;">Список учебных заданий и настройка уведомлений.</p>
+                <h2 style="margin-top: 0; margin-bottom: 15px;">Задания и Будильник</h2>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Новое учебное задание...">
+                    <button id="addTaskBtn">Добавить задачу</button>
+                </div>
+                <div id="tasksList" style="margin-top: 20px;">
+                    <p style="opacity: 0.6;">Список задач пока пуст.</p>
+                </div>
             </section>
 
             <!-- Вкладка 4: Настройки -->
             <section id="settings" class="tab-content">
-                <h2 style="margin-top: 0;">Настройки</h2>
-                <p style="opacity: 0.8;">Параметры внешнего вида, тем и фоновых видео/картинок.</p>
+                <h2 style="margin-top: 0; margin-bottom: 15px;">Настройки приложения</h2>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Настройка внешнего вида и фоновых элементов.</p>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <button id="toggleBgBtn" style="width: fit-content;">Сменить режим фона</button>
+                </div>
             </section>
         </main>
     </div>
