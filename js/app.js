@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderCalendar();
 
-    // 3. Вкладки
+    // 3. Навигация по вкладкам
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     navButtons.forEach(button => {
@@ -90,7 +90,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Загрузка медиа для задач
+    // 4. Дневник и оценки
+    const addGradeBtn = document.getElementById('addGradeBtn');
+    const subjectInput = document.getElementById('subjectInput');
+    const gradeInput = document.getElementById('gradeInput');
+    const gradesList = document.getElementById('gradesList');
+
+    let grades = JSON.parse(localStorage.getItem('college_grades') || '[]');
+
+    function saveAndRenderGrades() {
+        localStorage.setItem('college_grades', JSON.stringify(grades));
+        renderGrades();
+    }
+
+    function renderGrades() {
+        if (!gradesList) return;
+        gradesList.innerHTML = '';
+        grades.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.style.cssText = "display: flex; justify-content: space-between; align-items: center; padding: 12px; margin-bottom: 8px; background: rgba(255,255,255,0.05); border-radius: 8px;";
+            li.innerHTML = `<span><b>${item.subject}:</b> ${item.grades}</span>`;
+            
+            const delBtn = document.createElement('button');
+            delBtn.style.cssText = "background: transparent; border: none; color: #ff5555; cursor: pointer; font-size: 13px;";
+            delBtn.textContent = 'Удалить';
+            delBtn.onclick = () => { grades.splice(index, 1); saveAndRenderGrades(); };
+            
+            li.appendChild(delBtn);
+            gradesList.appendChild(li);
+        });
+    }
+
+    if (addGradeBtn && subjectInput && gradeInput) {
+        addGradeBtn.addEventListener('click', () => {
+            const subject = subjectInput.value.trim();
+            const gradeVal = gradeInput.value.trim();
+            if (!subject || !gradeVal) {
+                alert('Заполните предмет и оценки!');
+                return;
+            }
+            grades.push({ subject, grades: gradeVal });
+            saveAndRenderGrades();
+            subjectInput.value = '';
+            gradeInput.value = '';
+        });
+    }
+    renderGrades();
+
+    // 5. Загрузка медиа для задач
     const selectMediaBtn = document.getElementById('selectMediaBtn');
     const mediaFileInput = document.getElementById('mediaFileInput');
     const mediaFileName = document.getElementById('mediaFileName');
@@ -113,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Задачи и будильники
+    // 6. Задачи и будильники
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskInput = document.getElementById('taskInput');
     const alarmTimeInput = document.getElementById('alarmTimeInput');
@@ -126,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             localStorage.setItem('college_tasks', JSON.stringify(tasks));
         } catch (e) {
-            alert('Ошибка: Память заполнена! Слишком большой файл.');
+            alert('Ошибка: Память заполнена! Файл слишком большой.');
         }
         renderTasks();
         renderCalendar();
@@ -193,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     renderTasks();
 
-    // 6. Настройки кастомизации с защитой сохранения
+    // 7. Настройки (Фон, Размытие, Прозрачность)
     const blurRange = document.getElementById('blurRange');
     const blurValue = document.getElementById('blurValue');
     const opacityRange = document.getElementById('opacityRange');
@@ -254,29 +301,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const result = event.target.result;
-                try {
-                    if (file.type.startsWith('video')) {
-                        bgVideo.src = result;
-                        bgVideo.style.display = 'block';
-                        bgImage.style.display = 'none';
+                
+                if (file.type.startsWith('video')) {
+                    if (file.size > 4 * 1024 * 1024) {
+                        alert('Видео слишком большое! Оно показано сейчас, но после обновления страницы сбросится. Используйте файл меньше 4 МБ или картинку.');
+                    }
+                    bgVideo.src = result;
+                    bgVideo.style.display = 'block';
+                    bgImage.style.display = 'none';
+                    try {
                         localStorage.setItem('college_bg', result);
                         localStorage.setItem('college_bg_type', 'video');
-                    } else {
-                        bgImage.style.backgroundImage = `url(${result})`;
-                        bgImage.style.display = 'block';
-                        bgVideo.style.display = 'none';
+                    } catch (err) {
+                        console.warn('Видео слишком велико для хранения в localStorage');
+                    }
+                } else {
+                    bgImage.style.backgroundImage = `url(${result})`;
+                    bgImage.style.display = 'block';
+                    bgVideo.style.display = 'none';
+                    try {
                         localStorage.setItem('college_bg', result);
                         localStorage.setItem('college_bg_type', 'image');
+                    } catch (err) {
+                        alert('Картинка слишком большая для сохранения!');
                     }
-                } catch (err) {
-                    alert('Видео слишком большое для сохранения в память браузера! Выберите файл меньшего размера.');
                 }
             };
             reader.readAsDataURL(file);
         });
     }
 
-    // 7. Telegram уведомления
+    // 8. Telegram уведомления
     const tgTokenInput = document.getElementById('tgTokenInput');
     const tgChatIdInput = document.getElementById('tgChatIdInput');
     const saveTgBtn = document.getElementById('saveTgBtn');
