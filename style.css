@@ -136,11 +136,26 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Исправленный блок шапки календаря (фиксирует нормальное расположение кнопок и текста) */
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+    position: relative !important;
+    gap: 10px;
+}
+
+.calendar-header button {
+    width: auto !important;
+    flex: 0 0 auto !important;
+}
+
+.month-title {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    flex: 1;
 }
 
 .weekdays-grid {
