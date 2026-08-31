@@ -86,6 +86,6 @@ function initCalendar() {
 function loadTodaySchedule() {
     const scheduleEl = document.getElementById("todaySchedule");
     if (scheduleEl) {
-        scheduleEl.textContent = "Технология машиностроения — занятия по расписанию второго курса.";
+        scheduleEl.textContent = "Вторник: Технология машиностроения (2 курс).";
     }
 }
